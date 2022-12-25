@@ -1,9 +1,24 @@
 import React, { useState, useEffect } from 'react';
+import wikipedia from '../api/wikipedia';
 
 const Search = () => {
   const [term, setTerm] = useState('');
 
-  useEffect(() => {}, [term]);
+  useEffect(() => {
+    const search = async () => {
+      await wikipedia.get('/api.php', {
+        params: {
+          action: 'query',
+          list: 'search',
+          origin: '*',
+          format: 'json',
+          srsearch: term,
+        },
+      });
+    };
+
+    search();
+  }, [term]);
 
   return (
     <div>
